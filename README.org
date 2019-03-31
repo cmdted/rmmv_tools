@@ -1,7 +1,8 @@
 
 * Introduction
 
-This repository contains tools and tips for using RPG Maker MV (aka
-RMMV).
+This repository contains tools and tips for using RPG Maker MV (which
+we sometimes abbreviate as RMMV or rmmv). You may want to start with
+the docs on the [[https://github.com/cmdted/rmmv_tools/wiki][rmmv wiki]].
 
 
