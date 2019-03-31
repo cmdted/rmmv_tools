@@ -22,6 +22,8 @@ on RMMV and *CLOSED* the RMMV editor and *BEFOER* you commit to
 git, you run cleanRMMV.js to cleanup all of your RMMV files to
 make them nicer JSON format. This makes git diffs, merges, etc.,
 much easier to work with.
+
+See https://github.com/cmdted/rmmv_tools for more details.
 `
 
 var fs = require('fs')
