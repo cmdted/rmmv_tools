@@ -4,7 +4,7 @@
   "description": "Tools for using RPG Maker MV",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,8 @@
     "rmmv"
   ],
   "author": "cmdted",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "tmp": "^0.1.0"
+  }
 }
