@@ -39,6 +39,24 @@ function cleanPluginFile (fileName, outFile) {
                    ';') // last ; needed since we expect it ourselves
 }
 
+function cleanDir (myDir, outDir) {
+  var dataDir = fs.readdirSync(myDir)
+  for (let i = 0; i < dataDir.length; i++) {
+    console.log('cleaning ' + dataDir[i])
+    let myInPath = myDir + dataDir[i]
+    let lstat = fs.lstatSync(myInPath)
+    if (lstat.isDirectory()) {
+      console.log(`Descending into subdirectory ${myInPath}`)
+      cleanDir(myInPath + '/', outDir + dataDir[i] + '/')
+    } else {
+      let myOutPath = outDir + dataDir[i]
+      let item = fs.readFileSync(myInPath).toString()
+      let itemOut = JSON.stringify(JSON.parse(item), null, 4)
+      fs.writeFileSync(myOutPath, itemOut)
+    }
+  }
+}
+
 function main () {
   if (process.argv.length < 3 ||
       process.argv[2] === '--help' || process.argv[2] === '-help' ||
@@ -55,19 +73,20 @@ function main () {
   var pluginsFile = projectRoot + '/js/plugins.js'
   var pluginsOut = outDir + '/js/plugins.js'
 
-  var dataDir = fs.readdirSync(projectRoot + '/data/')
-  for (let i = 0; i < dataDir.length; i++) {
-    console.log('cleaning ' + dataDir[i])
-    let myInPath = projectRoot + '/data/' + dataDir[i]
-    let myOutPath = outDir + '/data/' + dataDir[i]
-    let item = fs.readFileSync(myInPath).toString()
-    let itemOut = JSON.stringify(JSON.parse(item), null, 4)
-    fs.writeFileSync(myOutPath, itemOut)
-  }
+  cleanDir(projectRoot + '/data/', outDir + '/data/')
 
   console.log(`Will clean plugins file ${pluginsFile} to ${pluginsOut}`)
 
   cleanPluginFile(pluginsFile, pluginsOut)
 }
 
-main()
+module.exports = {
+  cleanDir
+}
+
+// If this module is run via `node cleanRMMV.js ...` then we
+// call the main function. Otherwise, we do not so that the
+// tester or other code can import it and use the functions.
+if (require.main === module) {
+  main()
+}
